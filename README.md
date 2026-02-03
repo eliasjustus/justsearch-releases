@@ -133,13 +133,11 @@ JustSearch is under active development. Current focus is on stability and core s
 
 ## Downloads
 
-> **Coming Soon** — First public release in development.
+### Latest Release: [v0.1.0-alpha](https://github.com/eliasjustus/justsearch-releases/releases/tag/v0.1.0-alpha)
 
-<!--
-### Latest Release
-- [Windows Installer (x64)](https://github.com/eliasjustus/justsearch-releases/releases/latest)
-- [Portable ZIP](https://github.com/eliasjustus/justsearch-releases/releases/latest)
--->
+> **Alpha release** — Functional but early. Expect rough edges.
+
+- [Windows Installer (x64)](https://github.com/eliasjustus/justsearch-releases/releases/download/v0.1.0-alpha/JustSearch-0.1.0-alpha-win64-setup.exe) — 1.2 GB
 
 ### System Requirements
 
