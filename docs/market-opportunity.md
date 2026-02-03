@@ -23,20 +23,22 @@ Until recently, running capable AI locally was impractical. Hardware requirement
 
 ## Market Sizing
 
+*Note: Market sizing uses publicly available data with acknowledged limitations. Gaming hardware surveys (Steam) are used as proxies for GPU penetration; actual prosumer/developer hardware profiles may differ.*
+
 ### Total Addressable Market (TAM)
 
-**Global knowledge worker productivity software**: ~$50B annually, growing 10-15% YoY
+**Global knowledge worker productivity software**: ~$50B annually, growing 10-15% YoY *(industry estimates)*
 
-**Windows PC installed base**: 1.4B+ monthly active devices (Microsoft, 2024)
+**Windows PC installed base**: 1.4B+ monthly active devices *(Source: Microsoft, 2024)*
 
 ### Serviceable Addressable Market (SAM)
 
 **GPU-capable Windows PCs** (proxy from gaming/creator segment):
-- ~25-30% of Windows PCs have discrete GPUs
-- ~70% of discrete GPUs are NVIDIA (best llama.cpp support)
+- ~25-30% of Windows PCs have discrete GPUs *(industry estimate)*
+- ~70% of discrete GPUs are NVIDIA *(Source: Steam Hardware Survey, Dec 2025)*
 - Estimated **250-300M** devices capable of GPU-accelerated local AI
 
-**Tier breakdown by VRAM** (Steam Hardware Survey as proxy):
+**Tier breakdown by VRAM** *(Source: Steam Hardware Survey, Dec 2025)*:
 - 12GB+ VRAM (best experience): ~30% of GPU users → **75-100M devices**
 - 8GB+ VRAM (good experience): ~65% of GPU users → **160-200M devices**
 

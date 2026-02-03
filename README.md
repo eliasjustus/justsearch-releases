@@ -37,6 +37,8 @@ Ask questions about your files and get answers backed by source citations. Click
 
 ![Q&A with Citations](assets/screenshots/39-qa-response.png)
 
+*Screenshot shows Demo Mode, which allows testing AI features without GPU hardware. In production, responses come from local LLM inference.*
+
 ### AI-Powered Understanding
 Local LLM inference for semantic search, document summarization, and conversational Q&A. Works with your GPU for fast responses, or falls back to CPU when needed.
 
@@ -44,7 +46,7 @@ Local LLM inference for semantic search, document summarization, and conversatio
 
 ### Privacy by Design
 - All indexing and inference happens locally
-- No telemetry, no cloud dependencies for core features
+- No cloud telemetry — local-only logs and metrics for debugging
 - Your files stay on your machine
 
 ### Built for Builders
@@ -62,8 +64,8 @@ JustSearch uses a **three-process architecture** that brings cloud-grade resilie
 | Process | Role | Technology |
 |---------|------|------------|
 | **Head** | UI + API Gateway | Java (Javalin), React, Tauri |
-| **Body** | Indexing + Search | Lucene, Apache Tika, SQLite |
-| **Brain** | AI Inference | llama.cpp (local LLMs) |
+| **Body** | Indexing + Search + Embeddings | Lucene, Apache Tika, in-process llama.cpp |
+| **Brain** | AI Generation (Chat, Q&A) | llama-server (llama.cpp) |
 
 This design ensures:
 - **Crash isolation**: A problematic PDF won't crash the UI
@@ -139,6 +141,14 @@ JustSearch is under active development. Current focus is on stability and core s
 
 - [Windows Installer (x64)](https://github.com/eliasjustus/justsearch-releases/releases/download/v0.1.0-alpha/JustSearch-0.1.0-alpha-win64-setup.exe) — 1.2 GB
 
+### Verify Your Download (Optional)
+
+```powershell
+(Get-FileHash .\JustSearch-0.1.0-alpha-win64-setup.exe -Algorithm SHA256).Hash
+```
+
+Compare with the checksum in [`SHA256SUMS.txt`](https://github.com/eliasjustus/justsearch-releases/releases/download/v0.1.0-alpha/SHA256SUMS.txt) from the release.
+
 ### System Requirements
 
 | Component | Minimum | Recommended |
@@ -163,6 +173,8 @@ JustSearch is under active development. Current focus is on stability and core s
 - [Architecture](docs/architecture.md)
 - [Roadmap](docs/roadmap.md)
 - [Market Opportunity](docs/market-opportunity.md)
+- [Privacy Policy](PRIVACY.md)
+- [Third-Party Notices](THIRD_PARTY_NOTICES.txt)
 
 ---
 

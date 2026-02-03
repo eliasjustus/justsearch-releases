@@ -31,15 +31,15 @@ Cloud systems solve these with separate services. We bring the same pattern to d
 │  │       BODY         │  Knowledge Server                           │
 │  │  (Worker Process)  │  • Owns Lucene index exclusively            │
 │  │                    │  • Extracts text via Apache Tika            │
-│  │  indexer-worker    │  • Handles search queries                   │
+│  │  indexer-worker    │  • Handles search queries + embeddings      │
 │  │                    │  • Auto-restarts on crash (up to 3x)        │
 │  └────────────────────┘                                             │
 │                                                                      │
 │  ┌────────────────────┐                                             │
 │  │       BRAIN        │  Inference Server                           │
-│  │  (Native Binary)   │  • Runs llama.cpp for local LLM             │
+│  │  (Native Binary)   │  • Runs llama.cpp for generation            │
 │  │                    │  • Manages VRAM allocation                  │
-│  │  llama-server.exe  │  • Handles embeddings + generation          │
+│  │  llama-server.exe  │  • Handles Chat, Q&A, Summarization         │
 │  │                    │  • Health-monitored, auto-recovers          │
 │  └────────────────────┘                                             │
 │                                                                      │

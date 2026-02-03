@@ -55,7 +55,7 @@ This architecture ensures:
 ### vs. Other Local Search Tools (Khoj, etc.)
 - Purpose-built "search → inspect → answer" loop
 - Windows-first with proper file locking handling
-- Lower setup friction (bundled models, no configuration)
+- Lower setup friction — in-app AI setup with guided model download
 
 ## Target Users
 
@@ -74,4 +74,4 @@ JustSearch is in active development. Core search and AI Q&A functionality works.
 - Search quality improvements
 - Installer and onboarding polish
 
-First public release coming soon.
+**[v0.1.0-alpha is available now →](https://github.com/eliasjustus/justsearch-releases/releases/tag/v0.1.0-alpha)**
