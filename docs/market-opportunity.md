@@ -29,18 +29,21 @@ Until recently, running capable AI locally was impractical. Hardware requirement
 
 **Global knowledge worker productivity software**: ~$50B annually, growing 10-15% YoY *(industry estimates)*
 
-**Windows PC installed base**: 1.4B+ monthly active devices *(Source: Microsoft, 2024)*
+**Windows PC installed base**: 1.4B+ monthly active devices [^1]
 
 ### Serviceable Addressable Market (SAM)
 
 **GPU-capable Windows PCs** (proxy from gaming/creator segment):
 - ~25-30% of Windows PCs have discrete GPUs *(industry estimate)*
-- ~70% of discrete GPUs are NVIDIA *(Source: Steam Hardware Survey, Dec 2025)*
+- ~70% of discrete GPUs are NVIDIA [^2]
 - Estimated **250-300M** devices capable of GPU-accelerated local AI
 
-**Tier breakdown by VRAM** *(Source: Steam Hardware Survey, Dec 2025)*:
+**Tier breakdown by VRAM** [^2]:
 - 12GB+ VRAM (best experience): ~30% of GPU users → **75-100M devices**
 - 8GB+ VRAM (good experience): ~65% of GPU users → **160-200M devices**
+
+[^1]: Microsoft "By the Numbers" (2024): https://news.microsoft.com/bythenumbers/en/windowsdevices
+[^2]: Steam Hardware Survey (Dec 2025): https://store.steampowered.com/hwsurvey/videocard/
 
 ### Serviceable Obtainable Market (SOM)
 

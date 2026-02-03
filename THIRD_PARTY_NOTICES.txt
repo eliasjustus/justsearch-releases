@@ -1,5 +1,13 @@
 THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
 
+This file covers the AI runtime components bundled with JustSearch (llama.cpp
+and its dependencies). Full third-party notices for all components (including
+Apache Lucene, Apache Tika, Tauri, and Java runtime libraries) are included
+in the installed application under the "licenses" directory.
+
+AI Runtime Components
+=====================
+
 JustSearch includes or depends on the following third-party software:
 
 ================================================================================

@@ -26,7 +26,9 @@ JustSearch brings AI-powered search to your local files with complete privacy:
 
 - **Mixed Corpus**: Search across code, PDFs, documents, and images (via OCR) in one unified interface.
 
-![Search Results](assets/screenshots/18-search-results-light.png)
+![Search Results](assets/screenshots/02-search-light.png)
+
+*Screenshot shows keyword search with document preview. "AI service offline" indicates the optional AI features aren't active — search works fully without GPU.*
 
 ---
 
@@ -141,6 +143,8 @@ JustSearch is under active development. Current focus is on stability and core s
 
 - [Windows Installer (x64)](https://github.com/eliasjustus/justsearch-release/releases/download/v0.1.0-alpha/JustSearch-0.1.0-alpha-win64-setup.exe) — 1.2 GB
 
+*Why so large? The installer bundles everything needed to run offline: Java runtime, search engine (Lucene), content extraction (Tika), and the AI inference server (llama-server). AI models are NOT included — they're downloaded separately via "Install AI" (~4-8 GB depending on configuration).*
+
 ### Verify Your Download (Optional)
 
 ```powershell
@@ -180,7 +184,9 @@ Compare with the checksum in [`SHA256SUMS.txt`](https://github.com/eliasjustus/j
 
 ## License
 
-JustSearch is licensed under the [Apache License 2.0](LICENSE).
+**Documentation**: This repository (docs, screenshots, marketing materials) is licensed under [Apache License 2.0](LICENSE).
+
+**Software**: The JustSearch application binaries are provided for evaluation purposes. Source code is not yet publicly available. Commercial licensing terms will be announced with a future stable release.
 
 ---
 
