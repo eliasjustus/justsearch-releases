@@ -116,4 +116,4 @@ This removes:
 
 If you have privacy questions or concerns:
 - Email: eliasjustus457@gmail.com
-- GitHub: [justsearch-release/issues](https://github.com/eliasjustus/justsearch-release/issues)
+- GitHub: [justsearch-releases/issues](https://github.com/eliasjustus/justsearch-releases/issues)

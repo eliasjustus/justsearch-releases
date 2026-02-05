@@ -74,4 +74,4 @@ JustSearch is in active development. Core search and AI Q&A functionality works.
 - Search quality improvements
 - Installer and onboarding polish
 
-**[v0.1.0-alpha is available now →](https://github.com/eliasjustus/justsearch-release/releases/tag/v0.1.0-alpha)**
+**[v0.1.0-alpha is available now →](https://github.com/eliasjustus/justsearch-releases/releases/tag/v0.1.0-alpha)**
