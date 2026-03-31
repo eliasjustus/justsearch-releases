@@ -18,13 +18,15 @@ Cloud AI assistants can help, but they require uploading sensitive data to exter
 
 JustSearch brings AI-powered search to your local files with complete privacy:
 
-- **Semantic Search**: Find documents by meaning, not just keywords. Ask "notes about the Q3 budget discussion" and find relevant files even if they don't contain those exact words.
+- **Hybrid Neural Search**: Three retrieval paradigms — keyword (BM25), dense vectors, and learned sparse retrieval (SPLADE) — run in parallel and fuse results. A cross-encoder reranker refines the final ranking.
 
-- **Cited Answers**: Get AI-generated answers with clickable citations. Every claim links back to the exact source passage — verify anything with one click.
+- **Cited Answers**: AI-generated answers with clickable citations. Every claim links back to the exact source passage — verify anything with one click.
 
-- **100% Local**: Runs entirely on your machine using local LLMs. No cloud uploads, no API keys, no subscription required for core features.
+- **1,400+ File Formats**: Indexes PDF, email, Office documents, code, images (via OCR), and hundreds more via Apache Tika. Named entity extraction enables filtering by people, organizations, and dates.
 
-- **Mixed Corpus**: Search across code, PDFs, documents, and images (via OCR) in one unified interface.
+- **100% Local**: Runs entirely on your machine using local LLMs. No cloud uploads, no API keys, no subscription.
+
+- **Agent-Ready via MCP**: Exposes retrieval through the [Model Context Protocol](https://modelcontextprotocol.io/), so any AI agent can use JustSearch as a private retrieval backend.
 
 ![Search Results](assets/screenshots/02-search-light.png)
 
@@ -47,17 +49,55 @@ Local LLM inference for semantic search, document summarization, and conversatio
 ### Privacy by Design
 - All indexing and inference happens locally
 - No cloud telemetry — local-only logs and metrics for debugging
+- Search queries are redacted from logs
 - Your files stay on your machine
 
 ### Built for Builders
-Optimized for developers and technical knowledge workers:
 - Index codebases alongside documentation
 - Fast incremental indexing with file watching
 - Keyboard-driven interface
 
 ---
 
-## Technical Highlights
+## How It Works
+
+### Search Pipeline
+
+When you type a query, JustSearch runs up to three retrieval methods in parallel, fuses the results, and refines the ranking:
+
+| Stage | What Happens |
+|-------|-------------|
+| **Retrieval** | BM25 keyword search, dense KNN vectors (nomic-embed-text), and SPLADE learned sparse retrieval run in parallel |
+| **Fusion** | Results are combined via convex combination with per-leg weights. A separate chunk-level branch handles long documents |
+| **Reranking** | LambdaMART (fast, ~5 ms) followed by a cross-encoder (GTE-ModernBERT, ~200-500 ms) refine the final ranking |
+| **Correction** | Zero-hit queries trigger fuzzy correction with Levenshtein matching |
+
+The pipeline adapts automatically: if embeddings aren't indexed yet, it falls back to keyword search. If the GPU is busy with LLM inference, the cross-encoder runs on CPU. Every component degrades gracefully.
+
+### Ingestion Pipeline
+
+Files go through: content extraction (Apache Tika, 1,400+ formats) → text analysis (ICU tokenizer, NFC normalization, synonym expansion) → chunking (500-token windows with overlap) → BM25 indexing → dense embedding → SPLADE encoding → HNSW vector indexing → named entity extraction.
+
+Indexing runs in the background and yields to user activity automatically — the UI never stutters during heavy indexing.
+
+### Measured Quality
+
+Search quality is evaluated on standard information retrieval datasets using nDCG@10 (normalized discounted cumulative gain):
+
+| Dataset | Domain | Best nDCG@10 |
+|---------|--------|-------------|
+| BEIR SciFact | Academic (English) | 0.736 |
+| Enron Email | Email (English) | 0.830 |
+| CourtListener | Legal (English) | 0.925 |
+| MIRACL German | Wikipedia (German) | 0.734 |
+| MIRACL French | Wikipedia (French) | 0.706 |
+| MIRACL Chinese | Wikipedia (Chinese) | 0.691 |
+
+Methodology: full pipeline evaluation (ingest → enrich → search → score) using the [jseval](https://github.com/eliasjustus/justsearch-releases/blob/main/docs/overview.md) evaluation toolkit with standard relevance judgments.
+
+---
+
+## Architecture
 
 JustSearch uses a **three-process architecture** that brings cloud-grade resilience to desktop:
 
@@ -65,12 +105,19 @@ JustSearch uses a **three-process architecture** that brings cloud-grade resilie
 |---------|------|------------|
 | **Head** | UI + API Gateway | Java 25 (Javalin), React, Tauri |
 | **Body** | Indexing + Search + Embeddings | Lucene 10, Apache Tika, ONNX Runtime |
-| **Brain** | AI Generation (Chat, Q&A) | llama-server (llama.cpp) |
+| **Brain** | AI Generation (Chat, Q&A, Vision) | llama-server (llama.cpp) |
 
-This design ensures:
-- **Crash isolation**: A problematic PDF won't crash the UI
-- **Resource management**: Heavy indexing doesn't freeze your interface
-- **Graceful degradation**: No GPU? Falls back to keyword search seamlessly
+Five ML models run on consumer hardware with a VRAM arbitration protocol:
+
+| Model | Purpose | Runtime |
+|-------|---------|---------|
+| nomic-embed-text-v1.5 | Dense embeddings (768-dim) | GGUF via llama.cpp |
+| SPLADE-v3 | Learned sparse retrieval | ONNX Runtime |
+| GTE-ModernBERT | Cross-encoder reranking | ONNX Runtime (GPU) |
+| NER model | Named entity extraction | ONNX Runtime |
+| Qwen3VL-8B-Thinking | Chat, Q&A, summarization, OCR | GGUF via llama-server |
+
+On single-GPU systems, the embedding model and LLM cannot share VRAM simultaneously. A mode-switching state machine coordinates transitions via memory-mapped file signals — sub-millisecond IPC without network overhead.
 
 [Learn more about the architecture →](docs/architecture.md)
 
@@ -82,35 +129,26 @@ This design ensures:
 
 I started building JustSearch to solve my own problem: finding information across scattered files without uploading everything to the cloud. What began as a personal project evolved into a full desktop application with a distributed architecture typically found in cloud systems.
 
-**Technical background:**
-- Self-taught developer, building since age 15
-- Focus on systems programming (Java, Rust) and desktop applications
-- Abitur (German high school diploma) with advanced courses in Mathematics, Physics, and English
+Self-taught developer, building since age 15. Focus on systems programming (Java, Rust) and desktop applications. JustSearch represents 12+ months of focused development, solving hard problems around Windows file locking, VRAM management on consumer hardware, and local LLM integration.
 
-**What I've built:**
-- Three-process architecture with crash isolation and graceful degradation
-- Custom gRPC + memory-mapped file IPC layer for Windows
-- Integration of Lucene (search), Apache Tika (content extraction), and llama.cpp (local AI)
-- React + Tauri desktop shell with real-time file watching
-
-JustSearch represents 12+ months of focused development, solving hard problems around Windows file locking, VRAM management, and local LLM integration.
+I use AI coding agents (Claude Code) extensively as development multipliers — up to 4 agents working in parallel on separate git worktrees. Every architectural decision, quality measurement, and system integration is my own.
 
 ---
 
 ## Roadmap
 
-JustSearch is under active development. Current focus is on stability and core search quality.
+JustSearch is under active development. Current focus areas:
 
-**Future directions** (6-12+ months):
+**Near-term:**
+- End-to-end UX improvements (guided onboarding, transparent system state)
+- Open source release under Apache 2.0 with reproducible quality benchmarks
+- Corpus-aware search pipeline (automatic retrieval adaptation per query and content type)
 
-| Feature | Description |
-|---------|-------------|
-| **Cloud Connectors** | Index Google Drive, Slack, GitHub without uploading — pull data locally |
-| **Audio Intelligence** | Transcribe meetings and voice notes, search by spoken content |
-| **Smart Organization** | AI-assisted file organization and deduplication |
-| **Contextual Feeds** | Proactive daily digests of changes in watched folders |
-
-[View detailed roadmap →](docs/roadmap.md)
+**Future directions:**
+- Email and cloud storage indexing via open protocols (queries stay local)
+- Audio transcription and search (Whisper-based)
+- AI-assisted file organization
+- Linux and macOS support
 
 ---
 
@@ -124,7 +162,7 @@ JustSearch is under active development. Current focus is on stability and core s
 
 *Why so large? The installer bundles everything needed to run offline: Java runtime, search engine (Lucene), content extraction (Tika), and the AI inference server (llama-server). AI models are NOT included — they're downloaded separately via "Install AI" (~4-8 GB depending on configuration).*
 
-### Verify Your Download (Optional)
+### Verify Your Download
 
 ```powershell
 (Get-FileHash .\JustSearch-0.1.0-alpha-win64-setup.exe -Algorithm SHA256).Hash
@@ -166,8 +204,6 @@ JustSearch is licensed under the [Apache License 2.0](LICENSE).
 - Email: eliasjustus828@gmail.com
 - GitHub: [@eliasjustus](https://github.com/eliasjustus)
 - Location: Germany
-
-For questions, feedback, or partnership inquiries — reach out directly.
 
 ---
 
