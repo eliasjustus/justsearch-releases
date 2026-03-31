@@ -63,8 +63,8 @@ JustSearch uses a **three-process architecture** that brings cloud-grade resilie
 
 | Process | Role | Technology |
 |---------|------|------------|
-| **Head** | UI + API Gateway | Java (Javalin), React, Tauri |
-| **Body** | Indexing + Search + Embeddings | Lucene, Apache Tika, in-process llama.cpp |
+| **Head** | UI + API Gateway | Java 25 (Javalin), React, Tauri |
+| **Body** | Indexing + Search + Embeddings | Lucene 10, Apache Tika, ONNX Runtime |
 | **Brain** | AI Generation (Chat, Q&A) | llama-server (llama.cpp) |
 
 This design ensures:
@@ -73,25 +73,6 @@ This design ensures:
 - **Graceful degradation**: No GPU? Falls back to keyword search seamlessly
 
 [Learn more about the architecture →](docs/architecture.md)
-
----
-
-## Market Opportunity
-
-The personal knowledge management and enterprise search markets are experiencing rapid growth, driven by:
-
-- **AI PC adoption**: Consumer GPUs increasingly capable of running local LLMs
-- **Privacy regulation**: GDPR, CCPA, and industry compliance making cloud uploads problematic
-- **Knowledge worker productivity**: Average worker spends 2+ hours/day searching for information
-
-JustSearch targets the underserved intersection: users who need AI-powered search but cannot or will not upload sensitive data to cloud services.
-
-**Target segments**:
-- Developers searching codebases + documentation
-- Researchers managing literature and notes
-- Professionals in regulated industries (legal, healthcare, finance)
-
-[Read the full market analysis →](docs/market-opportunity.md)
 
 ---
 
@@ -163,18 +144,11 @@ Compare with the checksum in [`SHA256SUMS.txt`](https://github.com/eliasjustus/j
 
 ---
 
-## Demo
-
-> **Video coming soon** — Check back for a walkthrough of core features.
-
----
-
 ## Documentation
 
 - [Product Overview](docs/overview.md)
 - [Architecture](docs/architecture.md)
 - [Roadmap](docs/roadmap.md)
-- [Market Opportunity](docs/market-opportunity.md)
 - [Privacy Policy](PRIVACY.md)
 - [Third-Party Notices](THIRD_PARTY_NOTICES.txt)
 
@@ -182,16 +156,14 @@ Compare with the checksum in [`SHA256SUMS.txt`](https://github.com/eliasjustus/j
 
 ## License
 
-**Documentation**: This repository (docs, screenshots, marketing materials) is licensed under [Apache License 2.0](LICENSE).
-
-**Software**: The JustSearch application binaries are provided for evaluation purposes. Source code is not yet publicly available. Commercial licensing terms will be announced with a future stable release.
+JustSearch is licensed under the [Apache License 2.0](LICENSE).
 
 ---
 
 ## Contact
 
 **Elias Justus**
-- Email: eliasjustus457@gmail.com
+- Email: eliasjustus828@gmail.com
 - GitHub: [@eliasjustus](https://github.com/eliasjustus)
 - Location: Germany
 
