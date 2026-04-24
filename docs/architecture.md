@@ -87,7 +87,7 @@ The system works even when parts fail:
 | Content extraction | Apache Tika | Handles 1000+ file formats (PDF, Office, images via OCR) |
 | Local LLM | llama.cpp | Fast CPU/GPU inference, GGUF model format, active community |
 | UI | React + Tauri | Modern web UI in native desktop shell |
-| Backend | Java 21+ | Strong typing, mature ecosystem, Panama FFM for native interop |
+| Backend | Java 25 | Strong typing, mature ecosystem, Panama FFM for native interop |
 
 ## Why Not Simpler?
 

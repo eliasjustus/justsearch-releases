@@ -93,7 +93,7 @@ Search quality is evaluated on standard information retrieval datasets using nDC
 | MIRACL French | Wikipedia (French) | 0.706 |
 | MIRACL Chinese | Wikipedia (Chinese) | 0.691 |
 
-Methodology: full pipeline evaluation (ingest → enrich → search → score) using the [jseval](https://github.com/eliasjustus/justsearch-releases/blob/main/docs/overview.md) evaluation toolkit with standard relevance judgments.
+Methodology: full pipeline evaluation (ingest → enrich → search → score) using the [jseval](https://github.com/eliasjustus/justsearch-releases/blob/main/docs/overview.md) evaluation toolkit with standard BEIR/MIRACL relevance judgments. Raw run artifacts available on request.
 
 ---
 
@@ -111,7 +111,7 @@ Five ML models run on consumer hardware with a VRAM arbitration protocol:
 
 | Model | Purpose | Runtime |
 |-------|---------|---------|
-| nomic-embed-text-v1.5 | Dense embeddings (768-dim) | GGUF via llama.cpp |
+| gte-multilingual-base | Dense embeddings (768-dim), 70+ languages | ONNX Runtime |
 | SPLADE-v3 | Learned sparse retrieval | ONNX Runtime |
 | GTE-ModernBERT | Cross-encoder reranking | ONNX Runtime (GPU) |
 | NER model | Named entity extraction | ONNX Runtime |
@@ -141,7 +141,7 @@ JustSearch is under active development. Current focus areas:
 
 **Near-term:**
 - End-to-end UX improvements (guided onboarding, transparent system state)
-- Open source release under Apache 2.0 with reproducible quality benchmarks
+- Publication of the source repository (this repo hosts binaries and documentation; core sources are currently private)
 - Corpus-aware search pipeline (automatic retrieval adaptation per query and content type)
 
 **Future directions:**

@@ -148,13 +148,65 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 AI Models (downloaded separately via "Install AI")
 ================================================================================
 
-Default models are licensed under Apache 2.0:
+GGUF models downloaded via "Install AI":
 
-- Qwen3-VL-8B-Instruct (Chat/Vision): Apache 2.0
-  https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct-GGUF
+- Qwen3-VL-8B-Thinking (Chat / Vision): Apache License 2.0
+  https://huggingface.co/Qwen/Qwen3-VL-8B-Thinking-GGUF
 
-- nomic-embed-text-v1.5 (Embeddings): Apache 2.0
+- nomic-embed-text-v1.5 (packaged embedding fallback, GGUF): Apache License 2.0
   https://huggingface.co/nomic-ai/nomic-embed-text-v1.5-GGUF
+  Note: The current primary ONNX embedder is gte-multilingual-base.
+  See the "Search Models" section below.
 
-Models are NOT bundled with JustSearch. They are downloaded on-demand with
-user consent and stored locally.
+GGUF models are NOT bundled with JustSearch. They are downloaded on-demand
+with user consent and stored locally.
+
+================================================================================
+Search Models (ONNX, distributed via the models-v1 release)
+================================================================================
+
+The following ONNX models are hosted at
+https://github.com/eliasjustus/justsearch-releases/releases/tag/models-v1
+and downloaded by JustSearch's search indexing pipeline.
+
+--------------------------------------------------------------------------------
+gte-multilingual-base (dense embedding, primary)
+--------------------------------------------------------------------------------
+Source:  https://huggingface.co/Alibaba-NLP/gte-multilingual-base
+License: Apache License 2.0
+
+--------------------------------------------------------------------------------
+gte-multilingual-reranker-base (cross-encoder reranker)
+--------------------------------------------------------------------------------
+Source:  https://huggingface.co/Alibaba-NLP/gte-multilingual-reranker-base
+License: Apache License 2.0
+
+--------------------------------------------------------------------------------
+ms-marco-MiniLM-L-6-v2 (citation scorer)
+--------------------------------------------------------------------------------
+Source:  https://huggingface.co/cross-encoder/ms-marco-MiniLM-L-6-v2
+License: Apache License 2.0
+
+--------------------------------------------------------------------------------
+distilbert-base-multilingual-cased-ner-hrl (named entity recognition)
+--------------------------------------------------------------------------------
+Source:     https://huggingface.co/Davlan/distilbert-base-multilingual-cased-ner-hrl
+License:    Academic Free License v3.0 (AFL-3.0)
+            https://opensource.org/license/afl-3-0-php
+Base model: distilbert-base-multilingual-cased (Apache License 2.0)
+
+--------------------------------------------------------------------------------
+opensearch-neural-sparse-encoding-multilingual-v1 (SPLADE sparse retrieval)
+--------------------------------------------------------------------------------
+Source:    https://huggingface.co/opensearch-project/opensearch-neural-sparse-encoding-multilingual-v1
+License:   Apache License 2.0
+Copyright: OpenSearch Contributors
+Upstream NOTICE: https://github.com/opensearch-project/neural-search/blob/main/NOTICE
+
+Modifications: The ONNX files distributed in the models-v1 release are a
+custom PRESPARSE build (ReLU + log1p + TopK sparse-activation ops baked
+into the model graph for runtime efficiency). The underlying trained
+weights are unchanged. This modification is noted per Apache License 2.0
+Section 4(b).
+
+Apache License 2.0: https://www.apache.org/licenses/LICENSE-2.0
