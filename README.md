@@ -1,3 +1,11 @@
+> # ⚠️ Deprecated
+>
+> **JustSearch is now developed in the open at → https://github.com/eliasjustus/justsearch**
+>
+> The installer and source now live there ([latest release](https://github.com/eliasjustus/justsearch/releases/latest)). This repository is legacy; the model assets below remain hosted here only for compatibility with existing installs.
+>
+> ---
+
 # JustSearch
 
 **Local-first neural search for your personal files.**
